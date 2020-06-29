@@ -88,11 +88,6 @@ public class MainController {
     }
 
     private void turnLight(Circle sensor, boolean isFire){
-        if(isFire){
-            sensor.setFill(Color.RED);
-        } else {
-            sensor.setFill(Color.WHITE);
-            stateLabel.setText("Система не сообщает о наличии дыма");
-        }
+        sensor.setFill(isFire?Color.RED: Color.WHITE);
     }
 }
