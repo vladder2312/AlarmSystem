@@ -68,14 +68,15 @@ public class MainController {
         Arrays.fill(model.getSensors(), false);
     }
 
-    private void runEvent(int position){
+    void runEvent(int position){
+        if(position<1 || position>9) return;
         System.out.println("Creating FireEvent on "+position+" position");
         Event event = new FireEvent(System.currentTimeMillis(), position, 10);
         model.getEvents().add(event);
         event.start();
     }
 
-    private void handleFireEvent(FireEvent event){
+    public void handleFireEvent(FireEvent event){
         Circle sensor = null;
         int position = event.getPosition();
         for(Node node: systemGrid.getChildren()){ // Поиск датчика по номеру
@@ -87,7 +88,7 @@ public class MainController {
         turnLight(sensor, true);
     }
 
-    private void turnLight(Circle sensor, boolean isFire){
+    void turnLight(Circle sensor, boolean isFire){
         sensor.setFill(isFire?Color.RED: Color.WHITE);
     }
 }
