@@ -2,6 +2,7 @@ package alarmsystem.ui;
 
 import alarmsystem.events.Event;
 import alarmsystem.events.FireEvent;
+import alarmsystem.handlers.ActionChain;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -43,20 +44,13 @@ public class MainController {
     private final TimerTask countEvents = new TimerTask() {
         @Override
         public void run() {
-            int counter=0;
             String message;
+            model.setFireCounter(0);
             for (boolean sensor : model.getSensors()) {
                 if (sensor) {
-                    counter++;
+                    model.setFireCounter(model.getFireCounter()+1);
                 }
             }
-            switch (counter){
-                case 0 -> message = "Датчики не сообщают о наличии дыма";
-                case 1 -> message = "Один из датчиков сообщает о наличии дыма";
-                case 2 -> message = "Два датчика сообщает о наличии дыма. Вызов оператора...";
-                default -> message = "В здании пожар. Запуск системы тушения...";
-            }
-            Platform.runLater(() -> stateLabel.setText(message));
         }
     };
 
@@ -84,6 +78,24 @@ public class MainController {
                 sensor = (Circle) node;
             }
         }
+        String message;
+        switch (model.getFireCounter()){
+            case 0 -> message = "Датчики не сообщают о наличии дыма";
+            case 1 -> {
+                message = "Один из датчиков сообщает о наличии дыма";
+                new ActionChain().process(1);
+            }
+            case 2 -> {
+                message = "Два датчика сообщает о наличии дыма. Вызов оператора...";
+                new ActionChain().process(2);
+            }
+            default -> {
+                message = "В здании пожар. Запуск системы тушения...";
+                new ActionChain().process(3);
+            }
+        }
+        Platform.runLater(() -> stateLabel.setText(message));
+
         model.getSensors()[position]=true;
         turnLight(sensor, true);
     }
