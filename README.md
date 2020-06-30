@@ -11,3 +11,6 @@
 <img src="https://i.ibb.co/mHWxFdH/w1.png">
 <img src="https://i.ibb.co/7RjHzD0/w2.png">
 <img src="https://i.ibb.co/xqmPyRh/w3.png">
+<br>
+<h1>Диаграмма классов</h1>
+<img src="https://s8.hostingkartinok.com/uploads/images/2020/06/a58d8ac5f0eff9801acce8be4a508443.png">
